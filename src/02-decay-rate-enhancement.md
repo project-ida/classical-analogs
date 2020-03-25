@@ -13,6 +13,9 @@ jupyter:
     name: python3
 ---
 
+<a href="https://nbviewer.jupyter.org/github/project-ida/classical-analogs/blob/master/02-decay-rate-enhancement.ipynb" target="_parent"><img src="https://nbviewer.jupyter.org/static/img/nav_logo.svg" alt="Open In nbviewer" width="100"/></a>
+
+
 # A classical analog to demonstrate decay rate enhancement via couplings
 
 
@@ -301,8 +304,8 @@ plt.plot(df2.x3)
 ```python
 plt.plot(df2.x1[:500])
 plt.plot(df2.x2[:500])
-np.max(df2temp.x1[:500]) # index 220, value 0.390761
-df2temp[215:225] 
+np.max(df2.x1[:500]) # index 220, value 0.390761
+df2[215:225] 
 ```
 
 ```python
@@ -495,20 +498,8 @@ df_all.anchor3y[offset:] = 2-newcos3
 
 ## 4.7. Creating the final animations
 
-```python
-df = df_all
 
-# create position vectors for the first animated graph
-data1,data2,data3,data4,data5 = ([],[],[],[],[])
-for index,t in enumerate(allt): # step through every time step
-
-    if index % 5 == 0: # take only every nth element    
-        data1.append([[df.anchor1x[index],df.anchor1x[index]+df.sin1[index]],[df.anchor1y[index],df.anchor1y[index]-df.cos1[index]]]) 
-        data2.append([[0,0+df.sin2[index]],[2,2-df.cos2[index]]]) # first number: x anchor; second number: y anchor 
-        data3.append([[df.anchor3x[index],df.anchor3x[index]+df.sin1[index]],[df.anchor3y[index],df.anchor3y[index]-df.cos1[index]]]) 
-        data4.append([[-3+df.sin1[index],0+df.sin2[index]],[2-df.cos1[index],2-df.cos2[index]]]) 
-        data5.append([[0+df.sin2[index],3+df.sin3[index]],[2-df.cos2[index],2-df.cos3[index]]]) 
-```
+First, we'll create a special function that makes the coupling lines disappear when there is no coupling. 
 
 ```python
 def animate1special(i,data_graph1): # animation function that is called once for every frame (for fig 1)
@@ -530,32 +521,7 @@ def animate1special(i,data_graph1): # animation function that is called once for
         lines1A[lineno].set_ydata(data_graph1[lineno][i][1])
 ```
 
-```python
-# call the animation function 
-subplot1_data = [[np.asarray(data1),np.asarray(data2),np.asarray(data3),np.asarray(data4),np.asarray(data5)]]
-
-thisfig = create_fig1()
-add_pendulum_patches(thisfig)
-lines1A[3].set_lw(0)
-lines1A[4].set_lw(0)
-lines1A[3].set_marker('')
-lines1A[4].set_marker('')
-lines1A[3].set_color('brown')
-lines1A[4].set_color('brown')
-
-ani = animation.FuncAnimation(thisfig,animate1special,frames=200,interval=100,fargs=(subplot1_data)) # blit=True,
-rc('animation', html='jshtml')
-ani        
-```
-
-```python
-plt.subplot(311)
-plt.plot(df_all.x1[:2500])
-plt.subplot(312)
-plt.plot(df_all.x2[:2500])
-plt.subplot(313)
-plt.plot(df_all.x3[:2500])
-```
+First let's consider an excited state with damping and with no couplings. So the excited state will decay on an exponential trajectory.
 
 ```python
 df = df1
@@ -590,9 +556,59 @@ rc('animation', html='jshtml')
 ani        
 ```
 
+Next, we consider the same system but at a time t we generate a coupling between the excited states and two matching states. If the coupling is phonon-nuclear in nature, it could be created by switching on a laser. In this sytem, each of the two matching states capable of absorbing half of the energy of the excited state. We will also assume that the resulting states of the receivers are unstable and lead to incoherent decay. If these are nuclei, this could mean incoherent disintegtration for instance via alpha or proton emission. 
+
+```python
+df = df_all
+
+# create position vectors for the first animated graph
+data1,data2,data3,data4,data5 = ([],[],[],[],[])
+for index,t in enumerate(allt): # step through every time step
+
+    if index % 5 == 0: # take only every nth element    
+        data1.append([[df.anchor1x[index],df.anchor1x[index]+df.sin1[index]],[df.anchor1y[index],df.anchor1y[index]-df.cos1[index]]]) 
+        data2.append([[0,0+df.sin2[index]],[2,2-df.cos2[index]]]) # first number: x anchor; second number: y anchor 
+        data3.append([[df.anchor3x[index],df.anchor3x[index]+df.sin1[index]],[df.anchor3y[index],df.anchor3y[index]-df.cos1[index]]]) 
+        data4.append([[-3+df.sin1[index],0+df.sin2[index]],[2-df.cos1[index],2-df.cos2[index]]]) 
+        data5.append([[0+df.sin2[index],3+df.sin3[index]],[2-df.cos2[index],2-df.cos3[index]]]) 
+```
+
+```python
+# call the animation function 
+subplot1_data = [[np.asarray(data1),np.asarray(data2),np.asarray(data3),np.asarray(data4),np.asarray(data5)]]
+
+thisfig = create_fig1()
+add_pendulum_patches(thisfig)
+lines1A[3].set_lw(0)
+lines1A[4].set_lw(0)
+lines1A[3].set_marker('')
+lines1A[4].set_marker('')
+lines1A[3].set_color('brown')
+lines1A[4].set_color('brown')
+
+ani = animation.FuncAnimation(thisfig,animate1special,frames=200,interval=100,fargs=(subplot1_data)) # blit=True,
+rc('animation', html='jshtml')
+ani        
+```
+
+```python
+plt.subplot(311)
+plt.plot(df_all.x1[:2500])
+plt.subplot(312)
+plt.plot(df_all.x2[:2500])
+plt.subplot(313)
+plt.plot(df_all.x3[:2500])
+```
+
+Finally, we can see the decay rate enhancement if we plot together the decay trajectory of the excited state for the uncoupled and coupled system. 
+
 ```python
 plt.plot(df1.x2)
 plt.plot(df_all.x2[:2500])
+```
+
+```python
+
 ```
 
 ```python

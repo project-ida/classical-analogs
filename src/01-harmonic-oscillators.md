@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-<a href="https://nbviewer.jupyter.org/github/project-ida/classical-analogs/blob/master/2.%20Classical%20analog%20for%20decay%20rate%20enhancement.ipynb" target="_parent"><img src="https://nbviewer.jupyter.org/static/img/nav_logo.svg" alt="Open In nbviewer" width="100"/></a>
+<a href="https://nbviewer.jupyter.org/github/project-ida/classical-analogs/blob/master/01-harmonic-oscillators.ipynb" target="_parent"><img src="https://nbviewer.jupyter.org/static/img/nav_logo.svg" alt="Open In nbviewer" width="100"/></a>
 
 
 # Harmonic oscillators and coupled harmonic oscillators
