@@ -5,16 +5,13 @@ jupyter:
     text_representation:
       extension: .md
       format_name: markdown
-      format_version: '1.2'
-      jupytext_version: 1.4.1
+      format_version: '1.3'
+      jupytext_version: 1.15.1
   kernelspec:
-    display_name: Python 3
+    display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
-
-<a href="https://nbviewer.jupyter.org/github/project-ida/classical-analogs/blob/master/02-decay-rate-enhancement.ipynb" target="_parent"><img src="https://nbviewer.jupyter.org/static/img/nav_logo.svg" alt="Open In nbviewer" width="100"/></a>
-
 
 # A classical analog to demonstrate decay rate enhancement via couplings
 
